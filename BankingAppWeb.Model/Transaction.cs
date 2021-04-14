@@ -13,6 +13,7 @@ namespace BankingAppWeb.Model
         public int TransactionId { get; set; }
         [ForeignKey("AccountId")]
         public Account Account { get; set; }
+        [Required]
         public int AccountId { get; set; }
         [Required]
         public TranType TranType { get; set; }

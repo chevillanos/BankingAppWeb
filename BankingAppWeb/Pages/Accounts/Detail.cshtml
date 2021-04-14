@@ -1,5 +1,5 @@
-﻿@page "{customerId:int}"
-@model BankingAppWeb.Pages.Customers.DetailModel
+﻿@page "{accountId:int}"
+@model BankingAppWeb.Pages.Accounts.DetailModel
 @{
 }
 
@@ -8,13 +8,13 @@
     <div class="alert alert-info">@Model.Message</div>
 }
 
-<h2>@Model.Customer.CustomerName</h2>
+<h2>@Model.Account.AccountId</h2>
 <div class="form-group">
     <div>
-        Id: @Model.Customer.CustomerId
+        Customer: @Model.Account.Customer.CustomerName
     </div>
     <div>
-        Address: @Model.Customer.CustomerAddress
+        Address: @Model.Account.AccountType
     </div>
 </div>
 

@@ -1,0 +1,20 @@
+﻿@page
+@model BankingAppWeb.Pages.Accounts.AddModel
+@{
+}
+
+<h2>Add Account</h2>
+<form method="post">
+    <input type="hidden" asp-for="Account.AccountId" value="0" />
+    <div class="form-group">
+        <label asp-for="Account.CustomerId"></label>
+        <select asp-for="Account.CustomerId" class="form-control" asp-items="Model.Customers"></select>
+        <span class="text-danger" asp-validation-for="Account.CustomerId"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Account.AccountType"></label>
+        <select asp-for="Account.AccountType" class="form-control" asp-items="Model.AccountTypes"></select>
+        <span class="text-danger" asp-validation-for="Account.AccountType"></span>
+    </div>
+    <button type="submit" class="btn btn-outline-secondary">Save</button>
+</form>
