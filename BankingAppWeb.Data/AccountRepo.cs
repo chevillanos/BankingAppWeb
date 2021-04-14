@@ -7,16 +7,10 @@ using System.Threading.Tasks;
 
 namespace BankingAppWeb.Data
 {
-    public class AccountRepo : IAccountRepo
+    public class AccountRepo : BankingAppRepo<Account>, IAccountRepo
     {
-        public IEnumerable<Account> GetAll()
+        public AccountRepo(BankingAppWebDbContext db) : base(db)
         {
-            throw new NotImplementedException();
-        }
-
-        public Account GetById(int id)
-        {
-            throw new NotImplementedException();
         }
     }
 }

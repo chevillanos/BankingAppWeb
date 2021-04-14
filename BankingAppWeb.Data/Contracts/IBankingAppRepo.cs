@@ -6,7 +6,8 @@ namespace BankingAppWeb.Data
 {
     public interface IBankingAppRepo<T> where T : class
     {
-        IEnumerable<T> GetAll();
         T GetById(int id);
+        T Add(T entity);
+        int Commit();
     }
 }

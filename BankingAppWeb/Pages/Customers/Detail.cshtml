@@ -1,0 +1,11 @@
+﻿@page "{customerId:int}"
+@model BankingAppWeb.Pages.Customers.DetailModel
+@{
+}
+
+@if (Model.Message != null)
+{
+    <div class="alert alert-info">@Model.Message</div>
+}
+
+<h2>@Model.Customer.CustomerName</h2>
