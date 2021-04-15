@@ -36,7 +36,7 @@ namespace BankingAppWeb.Pages.Customers
             _customerRepo.Add(Customer);
             _customerRepo.Commit();
             TempData["Message"] = "Customer saved!";
-            return RedirectToPage("./Detail", new { customerId = Customer.CustomerId });
+            return RedirectToPage("/Index");
         }
     }
 }

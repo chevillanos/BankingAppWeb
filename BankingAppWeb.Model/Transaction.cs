@@ -19,5 +19,7 @@ namespace BankingAppWeb.Model
         public TranType TranType { get; set; }
         [Required, DataType(DataType.Currency)]
         public decimal TranAmt { get; set; }
+        [Required]
+        public DateTime Date { get; set; }
     }
 }

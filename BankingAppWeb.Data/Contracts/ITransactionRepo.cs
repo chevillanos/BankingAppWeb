@@ -9,6 +9,6 @@ namespace BankingAppWeb.Data
 {
     public interface ITransactionRepo : IBankingAppRepo<Transaction>
     {
-
+        IEnumerable<Transaction> GetTransactionsAll();
     }
 }

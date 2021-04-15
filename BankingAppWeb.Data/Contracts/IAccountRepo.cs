@@ -9,5 +9,6 @@ namespace BankingAppWeb.Data
 {
     public interface IAccountRepo : IBankingAppRepo<Account>
     {
+        Account GetAccountById(int id);
     }
 }

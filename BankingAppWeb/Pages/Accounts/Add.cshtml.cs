@@ -50,7 +50,7 @@ namespace BankingAppWeb.Pages.Accounts
             _accountRepo.Add(Account);
             _accountRepo.Commit();
             TempData["Message"] = "Account saved!";
-            return RedirectToPage("./Detail", new { accountId = Account.AccountId });
+            return RedirectToPage("/Index");
         }
 
         private void GetCustomersList()

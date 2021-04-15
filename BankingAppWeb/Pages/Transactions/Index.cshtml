@@ -1,0 +1,65 @@
+﻿@page
+@model BankingAppWeb.Pages.Transactions.IndexModel
+@{
+}
+
+<h1>Transactions</h1>
+
+<table class="table">
+    <tr>
+        <th>
+            CustomerId
+        </th>
+        <th>
+            Customer Name
+        </th>
+        <th>
+            Account Number
+        </th>
+        <th>
+            Account Type
+        </th>
+        <th>
+            TransactionId
+        </th>
+        <th>
+            TransactionDate
+        </th>
+        <th>
+            TransactionType
+        </th>
+        <th>
+            Amount
+        </th>
+    </tr>
+    @foreach (var transaction in Model.Transactions)
+    {
+        <tr>
+            <td>
+                @transaction.Account.Customer.CustomerId
+            </td>
+            <td>
+                @transaction.Account.Customer.CustomerName
+            </td>
+            <td>
+                @transaction.Account.AccountId
+            </td>
+            <td>
+                @transaction.Account.AccountType
+            </td>
+            <td>
+                @transaction.TransactionId
+            </td>
+            <td>
+                @transaction.Date
+            </td>
+            <td>
+                @transaction.TranType
+            </td>
+            <td>
+                @transaction.TranAmt
+            </td>
+        </tr>
+    }
+</table>
+<a class="btn btn-outline-secondary" asp-page="/Index">Back</a>

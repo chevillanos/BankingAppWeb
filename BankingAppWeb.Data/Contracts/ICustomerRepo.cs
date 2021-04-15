@@ -9,6 +9,6 @@ namespace BankingAppWeb.Data
 {
     public interface ICustomerRepo : IBankingAppRepo<Customer>
     {
-        List<Customer> GetAllCustomers();
+        List<Customer> GetAllCustomers();        
     }
 }

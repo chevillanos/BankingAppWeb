@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace BankingAppWeb.Data
 {
@@ -18,7 +19,7 @@ namespace BankingAppWeb.Data
 
         public List<Customer> GetAllCustomers()
         {
-            return _db.Customers.ToList();
+            return _db.Customers.Include(c => c.Accounts).ToList();
         }
     }
 }
