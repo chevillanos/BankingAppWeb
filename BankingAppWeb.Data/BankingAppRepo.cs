@@ -17,7 +17,7 @@ namespace BankingAppWeb.Data
 
         public T Add(T entity)
         {
-            _db.Add(entity);
+            _db.Add<T>(entity);
             return entity;
         }
 
@@ -26,9 +26,20 @@ namespace BankingAppWeb.Data
             return _db.SaveChanges();
         }
 
+        public List<T> GetAll()
+        {
+            return _db.Set<T>().ToList();
+        }
+
         public T GetById(int id)
         {
             var entity = _db.Find<T>(id);
+            return entity;
+        }
+
+        public T Update(T entity)
+        {            
+            _db.Update<T>(entity);
             return entity;
         }
     }

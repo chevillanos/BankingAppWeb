@@ -4,14 +4,16 @@ using BankingAppWeb.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BankingAppWeb.Migrations
 {
     [DbContext(typeof(BankingAppWebDbContext))]
-    partial class BankingAppWebDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210416100110_SeedTransactionCustomerId")]
+    partial class SeedTransactionCustomerId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,21 +61,6 @@ namespace BankingAppWeb.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("BankingAppWeb.Model.CustomerAccount", b =>
-                {
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AccountId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CustomerId", "AccountId");
-
-                    b.HasIndex("AccountId");
-
-                    b.ToTable("CustomerAccount");
-                });
-
             modelBuilder.Entity("BankingAppWeb.Model.Transaction", b =>
                 {
                     b.Property<int>("TransactionId")
@@ -82,6 +69,9 @@ namespace BankingAppWeb.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("AccountId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
@@ -97,35 +87,18 @@ namespace BankingAppWeb.Migrations
 
                     b.HasIndex("AccountId");
 
+                    b.HasIndex("CustomerId");
+
                     b.ToTable("Transactions");
                 });
 
             modelBuilder.Entity("BankingAppWeb.Model.Account", b =>
                 {
                     b.HasOne("BankingAppWeb.Model.Customer", "Customer")
-                        .WithMany()
+                        .WithMany("Accounts")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Customer");
-                });
-
-            modelBuilder.Entity("BankingAppWeb.Model.CustomerAccount", b =>
-                {
-                    b.HasOne("BankingAppWeb.Model.Account", "Account")
-                        .WithMany("CustomerAccounts")
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("BankingAppWeb.Model.Customer", "Customer")
-                        .WithMany("CustomerAccounts")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Account");
 
                     b.Navigation("Customer");
                 });
@@ -138,17 +111,18 @@ namespace BankingAppWeb.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Account");
-                });
+                    b.HasOne("BankingAppWeb.Model.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId");
 
-            modelBuilder.Entity("BankingAppWeb.Model.Account", b =>
-                {
-                    b.Navigation("CustomerAccounts");
+                    b.Navigation("Account");
+
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("BankingAppWeb.Model.Customer", b =>
                 {
-                    b.Navigation("CustomerAccounts");
+                    b.Navigation("Accounts");
                 });
 #pragma warning restore 612, 618
         }

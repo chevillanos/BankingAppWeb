@@ -7,6 +7,7 @@
 
 <form method="post">
     <input type="hidden" asp-for="Transaction.TransactionId" value="0" />
+    <input id="hdnSelectedCustomerId" type="hidden" asp-for="SelectedCustomerId"/>
     <div class="form-group">
         <label>Customer</label>
         <select id="ddlCustomers" class="form-control" asp-items="Model.CustomerList"></select>
@@ -45,6 +46,7 @@
 <script type="text/javascript">
     $('#ddlCustomers').change(function () {
         var selectedCustomer = $('#ddlCustomers').val();
+        $('hdnSelectedCustomerId').value = selectedCustomer;
         var accountSelect = $('#ddlAccounts');
         accountSelect.empty();
         if (selectedCustomer != null && selectedCustomer != '') {

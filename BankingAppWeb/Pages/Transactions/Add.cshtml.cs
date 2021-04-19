@@ -15,35 +15,40 @@ namespace BankingAppWeb.Pages.Transactions
     {
         private readonly ITransactionRepo _transactionRepo;
         private readonly ICustomerRepo _customerRepo;
+        private readonly IAccountRepo accountRepo;
         private readonly IHtmlHelper _htmlHelper;
 
         [BindProperty]
         public Transaction Transaction { get; set; }
         [BindProperty]
         public string AccountTypeName { get; set; }
+        [BindProperty]
+        public int SelectedCustomerId { get; set; }
         public IEnumerable<SelectListItem> TransactionTypes { get; set; }
         public IEnumerable<Customer> Customers { get; set; }
+        public IEnumerable<Account> Accounts { get; set; }
         public IList<SelectListItem> CustomerList { get; set; } = new List<SelectListItem>();
         public IList<SelectListItem> AccountList { get; set; } = new List<SelectListItem>();
 
-        public AddModel(ITransactionRepo transactionRepo, ICustomerRepo customerRepo,
+        public AddModel(ITransactionRepo transactionRepo, ICustomerRepo customerRepo, IAccountRepo accountRepo,
             IHtmlHelper htmlHelper)
         {
             _transactionRepo = transactionRepo;
             _customerRepo = customerRepo;
+            this.accountRepo = accountRepo;
             _htmlHelper = htmlHelper;
         }
 
         public IActionResult OnGet()
         {
             TransactionTypes = _htmlHelper.GetEnumSelectList<TranType>();
-            Customers = _customerRepo.GetAllCustomers();
+            Customers = _customerRepo.GetAll();
             GetCustomersList();
 
             if (Customers != null)
             {
-                var selectedCustomer = Customers.FirstOrDefault();
-                PopulateAccountList(selectedCustomer.CustomerId);
+                SelectedCustomerId = Customers.FirstOrDefault().CustomerId;
+                PopulateAccountList(SelectedCustomerId);
             }
 
             return Page();
@@ -51,19 +56,23 @@ namespace BankingAppWeb.Pages.Transactions
 
         public IActionResult OnPost()
         {
+            var testOne = SelectedCustomerId;
             if (!string.IsNullOrEmpty(AccountTypeName))
                 Transaction.AccountId = (int)Enum.Parse(typeof(AccountType), AccountTypeName);
+
+            var tranAcccount = accountRepo.GetAccountByCustomerIdAndAccountType(SelectedCustomerId,
+                AccountTypeName);
+            Transaction.AccountId = tranAcccount.AccountId;
 
             if (!ModelState.IsValid)
             {
                 TransactionTypes = _htmlHelper.GetEnumSelectList<TranType>();
-                Customers = _customerRepo.GetAllCustomers();
+                Customers = _customerRepo.GetAll();
                 GetCustomersList();
 
                 if (Customers != null)
                 {
-                    var selectedCustomer = Customers.FirstOrDefault();
-                    PopulateAccountList(selectedCustomer.CustomerId);
+                    PopulateAccountList(SelectedCustomerId);
                 }
 
                 return Page();
@@ -77,8 +86,9 @@ namespace BankingAppWeb.Pages.Transactions
 
         public IEnumerable<SelectListItem> PopulateAccountList(int customerId)
         {
-            var customer = _customerRepo.GetAllCustomers().Where(c => c.CustomerId == customerId).FirstOrDefault();
-            GetAccountsList(customer);
+            var customer = _customerRepo.GetAll().Where(c => c.CustomerId == customerId).FirstOrDefault();
+            var accounts = accountRepo.GetAll().Where(a => a.CustomerId == customerId).ToList();
+            GetAccountsList(accounts);
 
             return AccountList;
         }
@@ -96,19 +106,35 @@ namespace BankingAppWeb.Pages.Transactions
             }
         }
 
-        private void GetAccountsList(Customer customer)
+        //private void GetAccountsList(Customer customer)
+        //{
+        //    var test = customer.CustomerAccounts;
+
+        //    if (customer.CustomerAccounts != null)
+        //    {
+        //        foreach (var account in customer.CustomerAccounts)
+        //        {
+        //            var item = new SelectListItem
+        //            {
+        //                Text = Enum.GetName(account.Account.AccountType),
+        //                Value = account.Account.AccountType.ToString()
+        //            };
+        //            AccountList.Add(item);
+        //        }
+        //    }
+        //}
+
+        private void GetAccountsList(List<Account> accounts)
         {
-            if (customer.Accounts != null)
+
+            foreach (var account in accounts)
             {
-                foreach (var account in customer.Accounts)
+                var item = new SelectListItem
                 {
-                    var item = new SelectListItem
-                    {
-                        Text = Enum.GetName(account.AccountType),
-                        Value = account.AccountType.ToString()
-                    };
-                    AccountList.Add(item);
-                }
+                    Text = Enum.GetName(account.AccountType),
+                    Value = account.AccountType.ToString()
+                };
+                AccountList.Add(item);
             }
         }
 

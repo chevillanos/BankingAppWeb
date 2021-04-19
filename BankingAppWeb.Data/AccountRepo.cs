@@ -16,9 +16,15 @@ namespace BankingAppWeb.Data
             _db = db;
         }
 
+        public Account GetAccountByCustomerIdAndAccountType(int customerId, string accountType)
+        {
+            var accountTypes = Enum.GetNames(typeof(AccountType)).ToList();
+            return _db.Accounts.Where(a => a.CustomerId == customerId && accountTypes.Contains(accountType)).FirstOrDefault();
+        }
+
         public Account GetAccountById(int id)
         {
-            return _db.Accounts.Include(a => a.Customer).FirstOrDefault();
+            return _db.Accounts.Include(a => a.CustomerAccounts).FirstOrDefault();
         }
     }
 }

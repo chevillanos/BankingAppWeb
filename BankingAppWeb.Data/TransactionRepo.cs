@@ -16,10 +16,18 @@ namespace BankingAppWeb.Data
             _db = db;
         }
 
+        public IEnumerable<Transaction> GetTransactionMyAmt(decimal tranAmt)
+        {
+            var tranType = Enum.GetNames<TranType>().ToList();
+            return _db.Transactions.Where(t => t.TranAmt >= 10000 && tranType.Contains("FixedType"));
+        }
+
         public IEnumerable<Transaction> GetTransactionsAll()
         {
             return _db.Transactions.Include(t => t.Account)
                 .ThenInclude(a => a.Customer).ToList();
         }
+
+
     }
 }

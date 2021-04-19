@@ -16,10 +16,5 @@ namespace BankingAppWeb.Data
         {
             _db = db;
         }
-
-        public List<Customer> GetAllCustomers()
-        {
-            return _db.Customers.Include(c => c.Accounts).ToList();
-        }
     }
 }

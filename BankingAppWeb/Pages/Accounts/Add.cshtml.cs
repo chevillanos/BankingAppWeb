@@ -38,24 +38,33 @@ namespace BankingAppWeb.Pages.Accounts
 
         public IActionResult OnPost()
         {
-            var errors = ModelState.Values.SelectMany(v => v.Errors);
-
-            if (!ModelState.IsValid)
+            try
             {
-                AccountTypes = _htmlHelper.GetEnumSelectList<AccountType>();
-                GetCustomersList();
-                return Page();
-            }                
+                var errors = ModelState.Values.SelectMany(v => v.Errors);
 
-            _accountRepo.Add(Account);
-            _accountRepo.Commit();
-            TempData["Message"] = "Account saved!";
-            return RedirectToPage("/Index");
+                if (!ModelState.IsValid)
+                {
+                    AccountTypes = _htmlHelper.GetEnumSelectList<AccountType>();
+                    GetCustomersList();
+                    return Page();
+                }
+
+                _accountRepo.Add(Account);
+                _accountRepo.Commit();
+                TempData["Message"] = "Account saved!";
+                return RedirectToPage("/Index");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
 
         private void GetCustomersList()
         {
-            var customers = _customerRepo.GetAllCustomers();
+            var customers = _customerRepo.GetAll();
             foreach (var customer in customers)
             {
                 var item = new SelectListItem

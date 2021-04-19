@@ -36,7 +36,9 @@
     {
         <tr>
             <td>
-                @transaction.Account.Customer.CustomerId
+                <a asp-page="/Customers/Edit" asp-route-customerId="@transaction.Account.Customer.CustomerId" >
+                    @transaction.Account.Customer.CustomerId
+                </a>
             </td>
             <td>
                 @transaction.Account.Customer.CustomerName

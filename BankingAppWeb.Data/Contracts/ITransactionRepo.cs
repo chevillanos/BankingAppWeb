@@ -10,5 +10,6 @@ namespace BankingAppWeb.Data
     public interface ITransactionRepo : IBankingAppRepo<Transaction>
     {
         IEnumerable<Transaction> GetTransactionsAll();
+        IEnumerable<Transaction> GetTransactionMyAmt(decimal tranAmt);
     }
 }

@@ -1,0 +1,21 @@
+﻿@page "{customerId:int?}"
+@model BankingAppWeb.Pages.Customers.EditModel
+@{
+}
+
+<h2>Edit Customer</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="Customer.CustomerId" />
+    <div class="form-group">
+        <label asp-for="Customer.CustomerName"></label>
+        <input asp-for="Customer.CustomerName" class="form-control" />
+        <span class="text-danger" asp-validation-for="Customer.CustomerName"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Customer.CustomerAddress"></label>
+        <input asp-for="Customer.CustomerAddress" class="form-control" />
+        <span class="text-danger" asp-validation-for="Customer.CustomerAddress"></span>
+    </div>
+    <button type="submit" class="btn btn-outline-secondary">Save</button>
+</form>

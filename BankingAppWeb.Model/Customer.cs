@@ -12,6 +12,6 @@ namespace BankingAppWeb.Model
         [Required]
         public string CustomerAddress { get; set; }
 
-        public List<Account> Accounts { get; set; }
+        public IList<CustomerAccount> CustomerAccounts { get; set; }
     }
 }

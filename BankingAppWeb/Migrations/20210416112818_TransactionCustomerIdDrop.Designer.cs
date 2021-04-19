@@ -4,14 +4,16 @@ using BankingAppWeb.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BankingAppWeb.Migrations
 {
     [DbContext(typeof(BankingAppWebDbContext))]
-    partial class BankingAppWebDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210416112818_TransactionCustomerIdDrop")]
+    partial class TransactionCustomerIdDrop
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
